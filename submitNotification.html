@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="fontaw/css/all.css" />
+	<link rel="stylesheet" href="css/animate.css" />
+	<link rel="stylesheet" href="css/swipe.css" />
+	
+</head>
+<body>
+	<div class="main app" id="deviceready">
+		<div class="menu slideInLeft">
+			<div class="menuHeader">
+				<img src="img/mechanical.jpg" />
+			</div>
+			<div class="menuItem userin" link="list"><div class="icon"><i class="fas fa-user-alt"></i></div>&nbsp;&nbsp;&nbsp;<a onclick="GOto()">Profile</a></div>
+			<div class="menuItem userout" link="techincal"><i class="far fa-file-alt"></i>&nbsp;&nbsp;&nbsp;<a onclick="submitNotification()" >Submitted notifiction</a></div>
+			<div class="menuItem userout" link="techincal"><i class="far fa-file-alt"></i>&nbsp;&nbsp;&nbsp;<a onclick="listNotification()" >List notifiction</a></div>
+			<div class="menuItem userout" link="techincal"><i class="far fa-file-alt"></i>&nbsp;&nbsp;&nbsp;<a onclick="logout()" >Logout</a></div>
+
+		</div>
+		<div class="container">
+			<div class="menuButton">
+				<i class="fas fa-bars fa-2x" style="padding-top: 15px;padding-left: 15px;"></i>
+				
+			</div>
+			<div id="divId" class="Items"><i class="fas fa-sync fa-spin" style="color: white;font-size: 30px;position: absolute;top: 45%;left: 45%;margin: auto !important;"></i></div>
+
+
+			
+		</div>
+	</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+
+<script src="./js/dataApi.js"></script>
+<script src="js/route.js"></script>
+<script>
+	var user = localStorage.getItem("userT");
+	if(user == "null" || user == undefined || user ==null)
+		window.location.href="index.html";
+
+	var user = JSON.parse(localStorage.getItem("userT"));
+	console.log(user);
+
+	var notifications=JSON.parse(localStorage.getItem("submitted"));
+	$("#divId").html("");
+	for(var key in notifications)
+	{
+		var value=notifications[key];
+		value.id=key;
+		$("#divId").append(
+			`
+			<div class="Item" >
+			<div class="Information" data='`+JSON.stringify(value)+`'>
+			<div class="Name">
+			`+value.userName+`	
+			</div>
+			<div class="Phone">
+			`+value.phone+`
+			</div>
+			<div class="Email">
+			`+value.email+`
+			</div>
+			</div>
+			<div class="Icons">
+			<div class="Icon" >
+			<i class="fab fa-whatsapp" onclick="goTowhatapp(`+value.phone+`)"></i>
+			</div >
+			<div class="Icon">
+			<i class="fas fa-map-marked-alt" onclick="goTomap(`+value.lat+`,`+value.lng+`)"></i>
+			</div>
+			<div class="Icon">
+			<i class="fas fa-phone-volume"></i>
+			</div>
+			</div>
+			</div>
+			`);
+	}
+	$(".Information").click(function(){
+		var r=confirm("Do you want to delete !");
+		if(r==true)
+		{
+			var data=$(this).attr("data");
+			data=JSON.parse(data);
+
+			var x=JSON.parse(localStorage.getItem("submitted"));
+			delete x[data.id];
+
+			localStorage.setItem("submitted",JSON.stringify(x));
+			location.href="submitNotification.html";
+
+
+		}
+		else
+		{
+
+		}
+
+
+
+
+	});
+
+
+
+	function goTowhatapp(x){
+		window.location.replace('https://api.whatsapp.com/send?phone='+x);
+		return false;
+	}
+	function goTomap(x,y){
+		window.location.replace('http://maps.google.com/maps?daddr='+x+','+y);
+		return false;
+	}
+
+	$(document).on('click','.menuButton',function(){
+		if($('.menu').css('display')=='none')
+		{
+			$('.menu').css('cssText','display:flex;');
+			$('.container').css('opacity','0.3');
+			$('.container').css('pointer-events','none');
+
+		}
+
+	});
+
+	$(document).click(function (e) {
+		if (!$('.menuButton').is(e.target) && $('.menuButton').has(e.target).length === 0 && !$('.menu').is(e.target) && $('.menu').has(e.target).length === 0  && $('.menu').css('display')!='none') 
+		{
+			$('.menu').addClass('slideOutLeft');
+			setTimeout(function(){
+				$('.container').css('opacity','1');
+				$('.container').css('pointer-events','auto');
+				$('.menu').css('cssText','display:none;');
+				$('.menu').removeClass('slideOutLeft');
+			}, 500);
+
+
+
+		}
+	});
+	
+</script>
+</html>

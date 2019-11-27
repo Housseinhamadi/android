@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="fontaw/css/all.css" />
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div id="divId" class="Items"></div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+
+<script src="js/dataApi.js"></script>
+<script src="js/route.js"></script>
+<script>
+	
+	navigator.geolocation.getCurrentPosition(function(position){
+		var type=localStorage.getItem("type");
+		lat= position.coords.latitude;
+		lng=position.coords.longitude;
+		technicals.once('value', function(snapshot) {
+
+			var technicals=JSON.parse(JSON.stringify(snapshot.val()));
+			console.log(technicals);
+			for(var key in technicals)
+			{ 
+				var value=technicals[key];
+				if((value.type==type ) && calcCrow(parseFloat(value.X),parseFloat(value.Y),parseFloat(lat),parseFloat(lng)) <= 5 )
+				{
+					$("#divId").append(
+						`
+						<div class="Item">
+						<div class="Information">
+						<div class="Name">
+						`+value.userName+`	
+						</div>
+						<div class="Phone">
+						`+value.phone+`
+						</div>
+						<div class="Email">
+						`+value.email+`
+						</div>
+						</div>
+						<div class="Icons">
+						<div class="Icon" >
+						<i class="fab fa-whatsapp" onclick="goTowhatapp(961`+value.phone+`)"></i>
+						</div >
+						<div class="Icon">
+						<i class="fas fa-map-marked-alt" onclick="goTomap(`+value.X+`,`+value.Y+`)"></i>
+						</div>
+						<div class="Icon">
+						<i class="fas fa-phone-volume"></i>
+						</div>
+						</div>
+						</div>
+						`);
+				}
+			}
+
+		});
+
+	},function(err){});
+	
+	function goTowhatapp(x){
+		window.location.replace('https://api.whatsapp.com/send?phone='+x);
+		return false;
+	}
+	function goTomap(){
+		window.location.replace('http://maps.google.com/maps?daddr=33.368101, 35.499764');
+		return false;
+	}
+
+
+	function calcCrow(lat1, lon1, lat2, lon2) 
+	{
+      var R = 6371; // km
+      var dLat = toRad(lat2-lat1);
+      var dLon = toRad(lon2-lon1);
+      var lat1 = toRad(lat1);
+      var lat2 = toRad(lat2);
+
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c;
+      return d;
+  }
+
+  function toRad(Value) 
+  {
+  	return Value * Math.PI / 180;
+  }
+</script>
+</html>

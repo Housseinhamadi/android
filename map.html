@@ -1,0 +1,50 @@
+
+<style>
+#map {
+	height: 100%;
+	width: 100%
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+
+<div id="map" >
+	<script>
+		var lat,long;
+
+		function init()
+		{
+
+			navigator.geolocation.getCurrentPosition(function(position){
+				lat= position.coords.latitude;
+				long=position.coords.longitude;
+				initMap();
+			},function(err){});
+
+
+		}
+
+		function initMap() {
+			var uluru ={"lat":lat ,"lng":long};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 15,
+				center: uluru
+			});
+			var uluru = {"lat":lat ,"lng":long };
+			var marker1 = new google.maps.Marker({
+				position: uluru,
+				map: map
+			});
+			marker1.addListener('click', function(){
+
+				var queryString = "?para1=" + uluru.lat + "&para2=" + uluru.lng;
+				window.location.href = "index.html" + queryString;
+					//alert(uluru.lat +"   "+ uluru.lng);
+			});
+
+		}
+	</script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKCEfRt5PET2CJNYlc1myL9EdtlaALB4o&callback=init">
+</script>
+</div>

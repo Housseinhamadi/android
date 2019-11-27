@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div class="container">
+		<button class="choise" onclick="goToChoice('Mechanical')">Mechanical</button>
+		<button class="choise" onclick="goToChoice('Electrical')">Electrical</button>
+		<button class="choise" onclick="goToChoice('Station')">Station</button>
+		<button class="choise" onclick="goToChoice('Keys')">Keys</button>
+		<button class="choise" onclick="goToChoice('Mobile cranes')">Mobile cranes</button>
+		<button class="choise" onclick="goToChoice('Repairing cupboards')">Repairing cupboard</button>
+	</div>
+</body>
+<script>
+	function goToChoice(x){
+		localStorage.setItem("type",x);
+		window.location.href="list.html";
+		return false;
+	}
+	
+</script>
+</html>

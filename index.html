@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>LogIn</title>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+	<link rel="stylesheet" href="./css/style.css">
+	<style>
+
+	.pop
+	{
+		position:absolute;
+		width: 80%;
+		height: 60%;
+		margin: auto;
+		top:20%;
+		left: 10%;
+		z-index: 100;
+	}
+	#map
+	{
+		position:relative;
+		width: 100%;
+		height:80%;
+	}
+	.dnone
+	{
+		display: none;
+	}
+</style>
+
+</head>
+
+<body>
+	<div class="pop dnone" >
+		<div id="map"  >
+			<div class="section1">
+
+				<script>
+					var lat,long;
+
+					function init()
+					{
+
+						navigator.geolocation.getCurrentPosition(function(position){
+							lat= position.coords.latitude;
+							long=position.coords.longitude;
+							initMap();
+						},function(err){});
+					}
+
+					function initMap() {
+
+						uluru ={"lat":lat ,"lng":long};
+						
+						var map = new google.maps.Map(document.getElementById('map'), {
+							zoom: 15,
+							center: uluru
+						});
+						var uluru = {"lat":lat ,"lng":long };
+						var marker1 = new google.maps.Marker({
+							position: uluru,
+							map: map
+						});
+						localStorage.setItem("loc", marker1.position);
+						marker1.addListener('click', function(){
+
+
+
+						});
+						google.maps.event.addListener(map, 'click', function(event) {
+							if (event.cancelable) {
+								event.preventDefault();
+							}
+							else
+							{
+								placeMarker(event.latLng);
+							}
+						});
+						function placeMarker(location) {
+
+
+							
+							if (marker1 == undefined){
+								marker1 = new google.maps.Marker({
+
+									position: location,
+									map: map, 
+									animation: google.maps.Animation.DROP,
+								});
+							}
+							else{
+								
+								marker1.setPosition(location);
+							}
+							
+							localStorage.setItem("loc", marker1.position);
+							map.setCenter(location);
+
+						}
+
+					}
+				</script>
+				<script async defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKCEfRt5PET2CJNYlc1myL9EdtlaALB4o&callback=init">
+			</script>
+		</div>
+
+	</div>
+	<div  style="position:relative;background-color: white;z-index: 200 ;display: flex;justify-content: center;align-items: center;">
+		<button type="button"  class="saveLocation" style="width:100%;">Submit</button>
+	</div>
+</div>
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign
+		In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<div class="login-form">
+			<form id="signInForm" class="sign-in-htm">
+				<div class="group">
+					<label for="user" class="label">Email</label>
+					<input id="email" name="email" type="text" class="input">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="password" name="password" type="password" class="input" data-type="password">
+				</div>
+				<div class="group">
+					<input type="submit" class="button" value="Sign In" onclick="signIn(event)">
+				</div>
+				<div class="hr"></div>
+			</form>
+			<form id="signUpForm" class="sign-up-htm">
+				<input id="X" name="X" type="hidden">
+				<input id="Y" name="Y" type="hidden">
+
+				<div>
+					<div class="group">
+						<label for="choice" class="label">You are a:</label>
+					</div>
+					<label class="container">User
+						<input id="userRadio" type="radio" checked="checked" name="radio">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Technical
+						<input id="technicalRadio" type="radio" name="radio">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div  class="group" id="popup">
+					<i class="material-icons">location_on</i> <label for="choice" class="label">your location:</label>
+				</div>
+				<div class="group">
+					<input id="token" name="token" type="hidden" class="input">
+					<input id=device value="getToken" type="button">
+				</div>
+				<div class="group">
+					<label for="user" class="label">UserName</label>
+					<input id="username" name="username" type="text" class="input">
+				</div>
+				<div class="group">
+					<label for="email" class="label">Email</label>
+					<input id="emailSignUp" name="email" type="text" class="input">
+				</div>
+				<div class="group">
+					<label for="phoneNumber" class="label">PhoneNumber</label>
+					<input id="phoneNumber" name="phoneNumber" type="text" class="input">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="passwordSignUp" name="password" type="password" class="input" data-type="password">
+				</div>
+				<div class="group dnone" id="popup1">
+					<select id="mySelect" class="form-input" >
+						<option value="Technique">Technique</option>
+						<option value="Mechanical">Mechanical</option>
+						<option value="Electrical">Electrical</option>
+						<option value="Station">Station</option>
+						<option value="Keys">Keys</option>
+						<option value="Mobile cranes">Mobile cranes</option>
+						<option value="Repairing cupboards">Repairing cupboards</option>
+					</select>
+				</div>
+
+				<div class="group">
+					<input type="submit" class="button" value="Sign Up" onclick="signUp(event)">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+	$('#userRadio').change(function () {
+		if (this.checked == true) {
+			$('#mySelect').prop("disabled", true);
+			$('#mapLink').attr("href", "#");
+		}
+
+	});
+	$('#technicalRadio').change(function () {
+		if (this.checked == true) {
+			$('#mySelect').prop("disabled", false);
+			$('#mapLink').attr("href", "map.html");
+		}
+	});
+
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="cordova.js"></script>
+<script src="js/route.js"></script>
+<script>
+	
+	var d=localStorage.getItem("submitted");
+	if(d == "null" || d == undefined || d ==null)
+	{
+		localStorage.setItem("submitted",JSON.stringify({}));
+	}	
+
+	var user=localStorage.getItem("userT");
+	if(user != "null" && user != undefined && user !=null)
+		window.location.href="listNotification.html";	
+
+	user=localStorage.getItem("userU");
+	if(user != "null" && user != undefined && user !=null)
+		window.location.href="home.html";		
+
+	$('#popup,#popup1').addClass('dnone');
+	$('#userRadio').change(function () {
+		if (this.checked == true) {
+			$('#popup,#popup1').addClass('dnone');
+		}
+
+	});
+	$('#technicalRadio').change(function () {
+		if (this.checked == true) {
+			$('#popup,#popup1').removeClass('dnone');
+		}
+	});
+
+	$('#device').click(function () {
+		check();
+	})
+
+	function check() {
+
+		if (typeof FCMPlugin != 'undefined') {
+			FCMPlugin.getToken(function (token) {
+				$('#token').val(token);
+			});
+			FCMPlugin.onTokenRefresh(function (token) {
+				$('#token').val(token);
+			});
+		}
+		else {
+			alert("undefined");
+		}
+	}
+
+	$('#popup').click(function(){
+		$('.pop').removeClass('dnone');
+	});
+
+	$('.saveLocation').click(function(){
+		var loc=localStorage.getItem("loc")
+		var a=loc.split('(')[1];
+		var a=a.split(')')[0];
+		var a=a.split(',');
+		$('input[id="X"]').attr("value",a[0]);
+		$('input[id="Y"]').attr("value",a[1]);
+
+		$('.pop').addClass("dnone");
+		
+	});
+
+
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+<script src="./js/dataApi.js"></script>
+
+
+</body>
+
+</html>

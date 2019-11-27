@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+	<link rel="stylesheet" href="./css/style.css">
+	<title></title>
+</head>
+<body>
+	<div class="login-wrap">
+			<div class="login-form">
+				
+				<form id="signUpForm" class="sign-up-htm">
+					<h1 align="center">PROFILE</h1>
+					<div class="group">
+						<label for="user" class="label">UserName</label>
+						<input id="username" name="username" type="text" class="input">
+					</div>
+					<div class="group">
+						<label for="email" class="label">Email</label>
+						<input id="emailSignUp" name="email" type="text" class="input">
+					</div>
+					<div class="group">
+						<label for="phoneNumber" class="label">PhoneNumber</label>
+						<input id="phoneNumber" name="phoneNumber" type="text" class="input">
+					</div>
+					<div class="group">
+						<label for="pass" class="label">Password</label>
+						<input id="passwordSignUp" name="password" type="password" class="input" data-type="password">
+					</div>
+					<div class="group">
+						<label for="pass" class="label">Confirm Password</label>
+						<input id="pass" type="password" class="input" data-type="password">
+					</div>
+					<div class="group">
+						<select id="mySelect" class="form-input" >
+							<option value="0">Technique</option>
+							<option value="1">Mechanical</option>
+							<option value="2">Electrical</option>
+							<option value="3">Station</option>
+							<option value="4">Keys</option>
+							<option value="5">Mobile cranes</option>
+							<option value="6">Repairing cupboards</option>
+						</select>
+					</div>
+					<div class="group">
+						<i class="material-icons">location on</i> <label for="choice" class="label"><a id="mapLink" href="map.html"> your location:</a></label>
+					</div>
+					<div class="group">
+						<input type="submit" class="button" value="UPDATE" onclick="signUp()">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

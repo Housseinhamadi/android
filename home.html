@@ -1,0 +1,71 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="fontaw/css/all.css" />
+	<link rel="stylesheet" href="css/animate.css" />
+	<link rel="stylesheet" href="css/swipe.css" />
+	
+	<script src="js/index.js" ></script>
+	<script src="js/jquery.js" ></script>
+
+
+</head>
+<body>
+	<div class="main app" id="deviceready">
+		<div class="menu slideInLeft">
+			<div class="menuHeader">
+				<img src="img/mechanical.jpg" />
+			</div>
+			<div class="menuItem userin" link="list"><div class="icon"><i class="fas fa-user-alt"></i></div>&nbsp;&nbsp;&nbsp;<a onclick="GOto()">Profile</a></div>
+			<div class="menuItem userout" link="techincal"><i class="far fa-file-alt"></i>&nbsp;&nbsp;&nbsp;<a onclick="ReplayNotification()" >Reply notifiction</a></div>
+			<div class="menuItem userout" link="techincal"><i class="far fa-file-alt"></i>&nbsp;&nbsp;&nbsp;<a onclick="logout()" >Logout</a></div>
+			
+
+		</div>
+		<div class="container">
+			<div class="menuButton">
+				<i class="fas fa-bars fa-2x" style="padding-top: 15px;padding-left: 15px;"></i>
+			</div>
+
+			<button class="emergency" onclick="goToChoice()">Emergency Situation</button>
+			<button class="Check" onclick="goToChoice1()">Check My Car</button>
+		</div>
+	</div>
+
+</body>
+<script src="js/route.js"></script>
+<script>
+	var user = localStorage.getItem("userU");
+	if(user == "null" || user == undefined || user ==null)
+		window.location.href="index.html";
+
+	$(document).on('click','.menuButton',function(){
+		if($('.menu').css('display')=='none')
+		{
+			$('.menu').css('cssText','display:flex;');
+			$('.container').css('opacity','0.3');
+			$('.container').css('pointer-events','none');
+
+		}
+
+	});
+
+	$(document).click(function (e) {
+		if (!$('.menuButton').is(e.target) && $('.menuButton').has(e.target).length === 0 && !$('.menu').is(e.target) && $('.menu').has(e.target).length === 0  && $('.menu').css('display')!='none') 
+		{
+			$('.menu').addClass('slideOutLeft');
+			setTimeout(function(){
+				$('.container').css('opacity','1');
+				$('.container').css('pointer-events','auto');
+				$('.menu').css('cssText','display:none;');
+				$('.menu').removeClass('slideOutLeft');
+			}, 500);
+		}
+	});
+	console.log(localStorage.getItem("user"));
+
+</script>
+
+</html>

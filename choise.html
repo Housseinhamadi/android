@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div class="container">
+		<button class="choise" value="Mechanical">Mechanical</button>
+		<button class="choise" value="Electrical">Electrical</button>
+		<button class="choise" value="Station">Station</button>
+		<button class="choise" value="Keys">Keys</button>
+		<button class="choise" value="Mobile cranes">Mobile cranes</button>
+		<button class="choise" value="Repairing cupboards">Repairing cupboards</button>
+		<button class="choise" value="Unknown Damage">Unknown Damage</button>
+	</div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+
+<script src="./js/dataApi.js"></script>
+<script>
+
+	$('.choise').click(function(){
+		var that=$(this);
+
+		navigator.geolocation.getCurrentPosition(function(position){
+			
+				lat= position.coords.latitude;
+				lng=position.coords.longitude;
+
+				var type=that.html();
+				
+				sendUserNotification(localStorage.getItem('userU'),lat,lng,type);
+			},function(err){});
+	});
+</script>
